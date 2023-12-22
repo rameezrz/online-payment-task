@@ -1,10 +1,22 @@
-/* index.ts */
+import express from "express";
+import mongoose from "mongoose";
+import userRoutes from "./routes/userRoutes";
+require('dotenv').config()
 
-// project dependencies
-import app from './app';
-const { SERVER_PORT } = process.env;
+const app = express();
+const PORT = process.env.PORT || 8000;
 
-// app listening 
-app.listen(SERVER_PORT, () => {
-  console.info(`App running on port ${SERVER_PORT}`);
+app.use(express.json());
+
+// Connect to MongoDB
+mongoose
+  .connect(process.env.MONGO_DB_URI as string)
+  .then(() => console.log("Mongodb connected"));
+
+// Use the user routes
+app.use("/users", userRoutes);
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });

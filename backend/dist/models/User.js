@@ -22,19 +22,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-// global dependencies
-const dotenv = __importStar(require("dotenv"));
-dotenv.config(); // initialise environment variables using a local .env file
-// project dependencies
-// set express app
-const express_1 = __importDefault(require("express"));
-const app = (0, express_1.default)();
-// middlewares
-app.use(express_1.default.json());
-// routes
-exports.default = app;
-//# sourceMappingURL=app.js.map
+const mongoose_1 = __importStar(require("mongoose"));
+const userSchema = new mongoose_1.Schema({
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+});
+const UserModel = mongoose_1.default.model('User', userSchema);
+exports.default = UserModel;
+//# sourceMappingURL=User.js.map
